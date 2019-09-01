@@ -1,0 +1,20 @@
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  color: black;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px;
+  min-width: 480px;
+  background: #F0F5F9;
+}
+
+h1, h2, h3, h4, p {
+  margin: 0;
+}
+
+ul, li {
+  padding: 0;
+  margin: 0;
+}
