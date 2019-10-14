@@ -117,6 +117,7 @@ const Right = styled.div`
 `
 const Image = styled.img`
   max-width: 100%;
+  min-height: 248px;
 `
 const Title = styled.h2`
   font-size: 26px;

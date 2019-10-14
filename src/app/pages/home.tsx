@@ -10,7 +10,7 @@ export default class Home extends React.Component {
       <Wrapper>
         <Header />
         <Aligner>
-          <List events={[]} />
+          <List events={fakeEvents} />
         </Aligner>
       </Wrapper>
     )
@@ -21,6 +21,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
 `
 const Aligner = styled.div`
   display: flex;

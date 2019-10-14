@@ -1,23 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
 import SearchIcon from '../icons/search';
+import { observer, inject } from 'mobx-react';
+import { InjectedStores } from '../../stores/store-definitions'
 
 interface IState {
   value: number | string
 }
 
-class HeaderInput extends React.Component<{}, IState> {
-  state = {
-    value: ""
-  }
-
-  onChange = (e: React.FormEvent<HTMLInputElement>) => this.setState({ value: e.currentTarget.value })
+@inject('appStore')
+@observer
+class HeaderInput extends React.Component<InjectedStores, IState> {
+  onKeyPress = (e: React.KeyboardEvent) => e.key === 'Enter' && this.props.appStore && this.props.appStore.makeSearch()
 
   render() {
     return (
       <Align>
         <SearchIcon />
-        <TextInput type="text" value={this.state.value} onChange={this.onChange} placeholder={"Procurar"} />
+        <TextInput
+          type="text"
+          onChange={this.props.appStore && this.props.appStore.onChangeQuery}
+          placeholder={"Procurar"}
+          value={this.props.appStore && this.props.appStore.searchQuery}
+          onKeyPress={this.onKeyPress}
+        />
       </Align>
     )
   }

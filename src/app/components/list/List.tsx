@@ -2,26 +2,34 @@ import React from 'react'
 import styled from 'styled-components'
 import { Event } from '../../interfaces/event'
 import ListItem from './ListItem'
-import Loading from '../loading/Loading'
+import NoEventsFound from '../messages/NoEventsFound';
+import { observer, inject } from 'mobx-react';
+import { InjectedStores } from '../../stores/store-definitions';
+import Skeleton from '../skeleton/skeleton'
 
-interface IProps {
+interface IProps extends InjectedStores {
   events?: Event[]
 }
 
+@inject('appStore')
+@observer
 class List extends React.Component<IProps> {
   renderItems() {
     return this.props.events && this.props.events.map((event, idx) => <ListItem key={`list_item_${idx}`} event={event} />)
   }
 
+  renderSkeletons() {
+    return <div style={{ width: '100%' }}><Skeleton /></div>
+  }
+
   renderNoEvents() {
-    return <p>Nenhum evento próximo!</p>
+    return this.props.appStore && !this.props.appStore.isLoadingMoreEvents && <NoEventsFound />
   }
 
   render() {
     return (
-      <div>
-        {this.props.events && this.props.events.length > 0 ? <Wrapper>{this.renderItems()}</Wrapper> : this.renderNoEvents()}
-        <Loading />
+      <div style={{ width: '100%' }}>
+        {this.props.events && this.props.events.length > 0 ? <Wrapper>{this.props.appStore && this.props.appStore.isSearching ? this.renderSkeletons() : this.renderItems()}</Wrapper> : this.renderNoEvents()}
       </div>
     )
   }
